@@ -12,6 +12,7 @@ mainscreen.resizable(0,0)
 global i
 i = 0
 text="hello"
+NEW_OPERATION = False
 
 
 
@@ -19,9 +20,45 @@ input_field = Entry(mainscreen)
 # input_field.pack()
 input_field.grid(row = 1,columnspan=7)
 
-def clear_all():
-    new_field = input_field.delete(0,tkinter.END)
-    input_field.insert(0,new_field)
+
+# get_factorial():
+
+def get_factorial(operator):
+    """Calculates the factorial of the number entered."""
+    number = int(input_field.get())
+    fact = 1
+    try:
+        while number > 0:
+            fact = fact*number
+            number -= 1
+        clear_all_expression()
+        input_field.insert(0, fact)
+    except Exception:
+        clear_all_expression()
+        input_field.insert(0, "Error")
+
+
+
+
+def clear_all_expression():
+    global i
+    new_field = input_field.delete(0,END)
+    print("Cleared all")
+    input_field.insert(i,'')
+
+
+def get_calculation():
+    global i
+    try:
+        expression = input_field.get()
+        ans = eval(expression)
+        input_field.delete(0,END)
+        input_field.insert(0,ans)
+    except SyntaxError:
+        input_field.delete(0,END)
+        input_field.insert(i,"Invalid Syntax")
+        raise SyntaxError ("Use proper equation you sick")
+
 
 
 def get_number(value):
@@ -66,7 +103,7 @@ six.grid(row = 3, column = 4)
 subtract = Button(mainscreen,text = "-",width = 9,command=lambda : get_operator('-'),activebackground="grey", activeforeground="black",padx=8,pady=5)
 subtract.grid(row = 3, column = 5)
 
-left_bracket = Button(mainscreen,text = "(",width = 9,command=lambda : get_operator(')'),activebackground="grey", activeforeground="black",padx=8,pady=5)
+left_bracket = Button(mainscreen,text = "(",width = 9,command=lambda : get_operator('('),activebackground="grey", activeforeground="black",padx=8,pady=5)
 left_bracket.grid(row = 3, column = 6)
 
 #third row
@@ -87,19 +124,19 @@ left_bracket.grid(row = 4, column = 6)
 
 
 #fourt row
-clear = Button(mainscreen,text = "AC",width = 9,command=lambda : clear_all(),activebackground="grey", activeforeground="black",padx=8,pady=5)
+clear = Button(mainscreen,text = "AC",width = 9,command=lambda : clear_all_expression   (),activebackground="grey", activeforeground="black",padx=8,pady=5,foreground = "Red")
 clear.grid(row = 5, column = 2)
 
 zero = Button(mainscreen,text = "0",width = 9,command=lambda : get_number('0'),activebackground="grey", activeforeground="black",padx=8,pady=5)
 zero.grid(row = 5, column = 3)
 
-equal = Button(mainscreen,text = "=",width = 9,command=lambda : get_number(),activebackground="grey", activeforeground="black",padx=8,pady=5)
+equal = Button(mainscreen,text = "=",width = 9,command=lambda : get_calculation(),activebackground="grey", activeforeground="black",padx=8,pady=5)
 equal.grid(row = 5, column = 4)
 
 divide = Button(mainscreen,text = "/",width = 9,command=lambda : get_operator('/'),activebackground="grey", activeforeground="black",padx=8,pady=5)
 divide.grid(row = 5, column = 5)
 
-square = Button(mainscreen,text = "^2",width = 9,command=lambda : get_operator('**2'),activebackground="grey", activeforeground="black",padx=8,pady=5)
+square = Button(mainscreen,text = "^2",width = 9,command=lambda : get_number('**2'),activebackground="grey", activeforeground="black",padx=8,pady=5)
 square.grid(row = 5, column = 6)
 
 
