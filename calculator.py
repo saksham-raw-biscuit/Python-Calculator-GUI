@@ -15,10 +15,16 @@ text="hello"
 NEW_OPERATION = False
 
 
+thm = ttk.Style()
+thm.theme_use('clam')
+
+photo = tkinter.PhotoImage(file = 'icon.png')
+mainscreen.wm_iconphoto(False, photo)
 
 input_field = Entry(mainscreen)
 # input_field.pack()
 input_field.grid(row = 1,columnspan=7)
+
 
 
 # get_factorial():
@@ -60,7 +66,17 @@ def get_calculation():
         raise SyntaxError ("Use proper equation you sick")
 
 
-
+def changeOnHover(button, colorOnHover, colorOnLeave):
+ 
+    # adjusting background of the widget
+    # background on entering widget
+    button.bind("<Enter>", func=lambda e: button.config(
+        background=colorOnHover))
+ 
+    # background color on leving widget
+    button.bind("<Leave>", func=lambda e: button.config(
+        background=colorOnLeave))
+    
 def get_number(value):
     global i
     print(i)
@@ -78,7 +94,7 @@ def get_operator(value):
 seven = Button(mainscreen,text = "7",width = 9,command=lambda : get_number('7'),activebackground="grey", activeforeground="black",padx=8,pady=5)
 seven.grid(row = 2, column = 2)
 
-eight = Button(mainscreen,text = "8",width = 9,command=lambda : get_number('8') ,activebackground="grey", activeforeground="black",padx=8,pady=5)
+eight = Button(master = mainscreen,text = "8",width = 9,command=lambda : get_number('8') ,activebackground="grey", activeforeground="black",padx=8,pady=5)
 eight.grid(row = 2, column = 3)
 
 nine = Button(mainscreen,text = "9",width = 9,command=lambda : get_number('9'),activebackground="grey", activeforeground="black",padx=8,pady=5)
@@ -89,6 +105,8 @@ plus.grid(row = 2, column = 5)
 
 factorial = Button(mainscreen,text = "x!",width = 9,command=lambda : get_factorial('!'),activebackground="grey", activeforeground="black",padx=8,pady=5)
 factorial.grid(row = 2, column = 6)
+
+changeOnHover(factorial, "red", "yellow")
 
 #second row
 four = Button(mainscreen,text = "4",width = 9,command=lambda : get_number('4'),activebackground="grey", activeforeground="black",padx=8,pady=5)
